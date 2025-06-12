@@ -27,7 +27,7 @@ router.post("/summarize", async (req, res) => {
         headers: {
           Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost:3000", // your frontend domain
+          "HTTP-Referer": "https://visualexcel.netlify.app", // your frontend domain
           "X-Title": "ExcelAnalytics AI",
         },
       }
