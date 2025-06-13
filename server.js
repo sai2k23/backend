@@ -27,16 +27,19 @@ const sessionStore = MongoStore.create({
 // 🍪 Session Middleware
 app.use(
   session({
-    secret: "secretkey",
+    secret: process.env.SESSION_SECRET || "secretkey",
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-      secure: false,
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      secure: true,        // required for HTTPS (Netlify + Render)
+      sameSite: "None",    // allows cross-site cookies
+      httpOnly: true,      // adds extra security
+      maxAge: 24 * 60 * 60 * 1000,
     },
   })
 );
+
 
 app.use(passport.initialize());
 app.use(passport.session());
