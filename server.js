@@ -17,6 +17,8 @@ import "./config/passport.js";
 
 
 const app = express();
+app.use(cors({ origin: "https://visualexcel.netlify.app", credentials: true }));
+app.use(express.json());
 
 // 🧠 MongoDB session store
 const sessionStore = MongoStore.create({
@@ -44,8 +46,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors({ origin: "https://visualexcel.netlify.app", credentials: true }));
-app.use(express.json());
+
 
 // Routes
 app.use("/auth", authRoutes);        // Email+Password
