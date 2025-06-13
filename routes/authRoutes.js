@@ -80,7 +80,7 @@ router.post("/forgot-password", async (req, res) => {
       expiresIn: "15m",
     });
 
-    const resetUrl = `https://visualexcel.netlify.app/reset-password/${token}`;
+    const resetUrl = `https://visualexcel.vercel.app/reset-password/${token}`;
 
     const mailOptions = {
       from: `ExcelAnalytics <${process.env.EMAIL_USER}>`,
