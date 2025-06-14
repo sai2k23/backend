@@ -10,12 +10,12 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/login",
+    failureRedirect: "https://visualexcel.netlify.app/login",
   }),
   (req, res) => {
     // Store session manually
     req.session.user = req.user;
-    res.redirect("http://localhost:3000/dashboard");
+    res.redirect("https://visualexcel.netlify.app/dashboard");
   }
 );
 

@@ -17,16 +17,12 @@ import "./config/passport.js";
 
 
 const app = express();
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(express.json());
-
-// 🧠 MongoDB session store
-const sessionStore = MongoStore.create({
-  mongoUrl: process.env.MONGO_URI,
-  collectionName: "sessions",
-});
-
-// 🍪 Session Middleware
+app.use(
+  cors({
+    origin: "https://visualexcel.netlify.app", // ✅ Netlify frontend
+    credentials: true,
+  })
+);
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "secretkey",
@@ -34,13 +30,23 @@ app.use(
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-      secure: true,        // required for HTTPS (Netlify + Render)
-      sameSite: "Lax",    // allows cross-site cookies
-      httpOnly: true,      // adds extra security
-      maxAge: 24 * 60 * 60 * 1000,
+      secure: true,       // ✅ needed for https (Render)
+      sameSite: "None",   // ✅ needed for cross-site cookies (Netlify ↔ Render)
+      httpOnly: true,
+      maxAge: 86400000,
     },
   })
 );
+app.use(express.json());
+
+
+// 🧠 MongoDB session store
+const sessionStore = MongoStore.create({
+  mongoUrl: process.env.MONGO_URI,
+  collectionName: "sessions",
+});
+
+
 
 
 app.use(passport.initialize());
