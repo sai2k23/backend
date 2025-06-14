@@ -18,6 +18,13 @@ import "./config/passport.js";
 
 const app = express();
 app.use(express.json());
+
+// ✅ Define session store BEFORE using it
+const sessionStore = MongoStore.create({
+  mongoUrl: process.env.MONGO_URI,
+  collectionName: "sessions",
+});
+
 // ✅ Session middleware (after store is defined)
 app.use(
   session({
@@ -34,32 +41,24 @@ app.use(
   })
 );
 
-// ✅ MongoDB session store MUST be defined before using
-const sessionStore = MongoStore.create({
-  mongoUrl: process.env.MONGO_URI,
-  collectionName: "sessions",
-});
-
 // ✅ CORS middleware
 app.use(
   cors({
-    origin: "https://visualexcel.netlify.app", // Netlify frontend
+    origin: "https://visualexcel.netlify.app",
     credentials: true,
   })
 );
-
-
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 // ✅ Routes
-app.use("/auth", authRoutes);        
-app.use("/auth", googleRoutes);      
-app.use("/api/upload", uploadRoutes); 
-app.use("/api/contact", contactRoutes); 
-app.use("/api/gemini", openRouterRoutes);  
-app.use("/api/admin", adminRoutes);      
+app.use("/auth", authRoutes);
+app.use("/auth", googleRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/api/gemini", openRouterRoutes);
+app.use("/api/admin", adminRoutes);
 
 // ✅ MongoDB connection
 mongoose
