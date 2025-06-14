@@ -35,7 +35,7 @@ app.use(
     store: sessionStore,
     cookie: {
       secure: true,        // required for HTTPS (Netlify + Render)
-      sameSite: "None",    // allows cross-site cookies
+      sameSite: "Lax",    // allows cross-site cookies
       httpOnly: true,      // adds extra security
       maxAge: 24 * 60 * 60 * 1000,
     },
