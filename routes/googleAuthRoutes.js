@@ -14,7 +14,7 @@ router.get(
   }),
   (req, res) => {
     // Store session manually
-    req.session.user = req.user;
+    
     res.redirect("https://visualexcel.netlify.app/dashboard");
   }
 );
