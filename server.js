@@ -17,21 +17,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import "./config/passport.js";
 
 const app = express();
-
-// ✅ MongoDB session store MUST be defined before using
-const sessionStore = MongoStore.create({
-  mongoUrl: process.env.MONGO_URI,
-  collectionName: "sessions",
-});
-
-// ✅ CORS middleware
-app.use(
-  cors({
-    origin: "https://visualexcel.netlify.app", // Netlify frontend
-    credentials: true,
-  })
-);
-
+app.use(express.json());
 // ✅ Session middleware (after store is defined)
 app.use(
   session({
@@ -48,7 +34,22 @@ app.use(
   })
 );
 
-app.use(express.json());
+// ✅ MongoDB session store MUST be defined before using
+const sessionStore = MongoStore.create({
+  mongoUrl: process.env.MONGO_URI,
+  collectionName: "sessions",
+});
+
+// ✅ CORS middleware
+app.use(
+  cors({
+    origin: "https://visualexcel.netlify.app", // Netlify frontend
+    credentials: true,
+  })
+);
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 

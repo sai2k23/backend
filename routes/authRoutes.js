@@ -61,9 +61,12 @@ router.get("/logout", (req, res) => {
 
 // ✅ Get Current User
 router.get("/user", (req, res) => {
+  console.log("Session ID:", req.sessionID);
+  console.log("Session content:", req.session);
   console.log("Current logged-in user:", req.user);
   res.json({ user: req.user || null });
 });
+
 
 
 
