@@ -10,12 +10,12 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "https://visualexcel.vercel.app/login",
+    failureRedirect: "http://localhost:3000/login",
   }),
   (req, res) => {
     // Store session manually
     req.session.user = req.user;
-    res.redirect("https://visualexcel.vercel.app/dashboard");
+    res.redirect("http://localhost:3000/dashboard");
   }
 );
 
