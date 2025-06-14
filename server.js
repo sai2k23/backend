@@ -17,7 +17,9 @@ import adminRoutes from "./routes/adminRoutes.js";
 import "./config/passport.js";
 
 const app = express();
+app.set("trust proxy", 1); // ✅ Enables secure cookies behind Render's proxy
 app.use(express.json());
+
 
 // ✅ Define session store BEFORE using it
 const sessionStore = MongoStore.create({

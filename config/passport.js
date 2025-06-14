@@ -34,10 +34,15 @@ passport.use(
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
   try {
+    console.log("🔍 Deserializing user with ID:", id);
     const user = await User.findById(id);
-    console.log("Deserialized user:", user); // ✅ Confirm session working
+    if (!user) {
+      console.warn("⚠️ No user found for ID:", id);
+    }
     done(null, user);
   } catch (err) {
+    console.error("❌ Deserialization failed:", err);
     done(err, null);
   }
 });
+
